@@ -18,7 +18,7 @@ type SocketContextProps = {
 
 export const SocketContext = createContext({} as SocketContextProps)
 
-const socket = io('http://localhost:3001')
+const socket = io(import.meta.env.VITE_PORT)
 
 export const SocketProvider = ({ children }: SocketProviderProps) => {
 	const [qrCode, setQrCode] = useState()
