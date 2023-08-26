@@ -13,9 +13,8 @@ export const QrCode = () => {
 	}
 
 	useEffect(() => {
-		console.log(qrCode)
 		executeMethod('qrCode')
-	}, [])
+	}, [qrCode, executeMethod])
 
 	return (
 		<Stack spacing="12">

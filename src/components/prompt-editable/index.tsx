@@ -10,7 +10,7 @@ export const PromptEditable = () => {
 
 	useEffect(() => {
 		executeMethod('getPrompt')
-	}, [])
+	}, [promptResult, executeMethod])
 
 	if (!promptResult) return <div>Loading ...</div>
 

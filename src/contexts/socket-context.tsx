@@ -27,8 +27,6 @@ export const SocketProvider = ({ children }: SocketProviderProps) => {
 	const [timePaused, setTimePaused] = useState()
 	const [numbersPausedResult, setNumbersPausedResult] = useState()
 
-	console.log(qrCode, keysResult)
-
 	socket.on('numbers-pauseds-result', async resultMethod => {
 		setNumbersPausedResult(resultMethod)
 	})

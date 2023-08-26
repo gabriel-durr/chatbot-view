@@ -30,6 +30,7 @@ export const EditableTextarea = ({ content, executeMethod }: EditableTextareaPro
 			/>
 			<Input
 				as={RootEditableTextarea}
+				resize="vertical"
 				minH="300px"
 				minW="700px"
 				textAlign="start"

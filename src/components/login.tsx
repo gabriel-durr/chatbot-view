@@ -13,8 +13,6 @@ export const Login = ({ onLogin }: LoginProps) => {
 	const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')
 
-	console.log(loginEnv, passwordEnv)
-
 	const handleLogin = () => {
 		if (username === loginEnv && password === passwordEnv) {
 			onLogin(true)

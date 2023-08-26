@@ -10,12 +10,9 @@ export const NumbersPaused = () => {
 	const { timePaused, numbersPausedResult, executeMethod } = useSocket()
 
 	useEffect(() => {
-		executeMethod('getTimePaused')
-	}, [timePaused])
-
-	useEffect(() => {
 		executeMethod('getPausedNumbers')
-	}, [])
+		executeMethod('getTimePaused')
+	}, [timePaused, numbersPausedResult, executeMethod])
 
 	if (!numbersPausedResult || !timePaused) return <div>Loading ...</div>
 

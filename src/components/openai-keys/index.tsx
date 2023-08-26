@@ -21,7 +21,7 @@ export const OpenaiKeys = () => {
 		executeMethod('getKeys')
 
 		setKeys(keysResult)
-	}, [keys])
+	}, [executeMethod, keys, keysResult])
 
 	if (!keys) return <div>Carregando...</div>
 
