@@ -27,7 +27,7 @@ export function Login({ onLogin }: LoginProps) {
 				</Heading>
 				<VStack w="full">
 					<Input type="text" placeholder="Usuário" value={userName} onChange={(e) => setUsername(e.target.value)} />
-					<Input type="password" placeholder="Senha" value={password} onChange={(e) => setPassword(e.target.value)} />
+					<Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
 				</VStack>
 				<Button w="full" colorScheme="green" onClick={handleOnSubmit}>
 					Entrar

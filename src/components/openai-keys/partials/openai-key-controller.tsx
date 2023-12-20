@@ -11,18 +11,18 @@ type OpenaiKeyControllerProps = {
 	isActive: boolean;
 };
 
-export const OpenaiKeyController = ({ keyId, label, isActive, defaultValue }: OpenaiKeyControllerProps) => {
-	const { executeMethod } = useSocket();
-
+export function OpenaiKeyController({ keyId, label, isActive, defaultValue }: OpenaiKeyControllerProps) {
 	const [newValue, setWewValue] = useState(defaultValue);
 
-	function handleActiveKey() {
-		executeMethod(isActive ? 'deactivateKey' : 'activateKey', keyId);
-	}
+	const { executeMethod } = useSocket();
 
-	function handleUpdateKey() {
+	const handleActiveKey = () => {
+		executeMethod(isActive ? 'deactivateKey' : 'activateKey', keyId);
+	};
+
+	const handleUpdateKey = () => {
 		executeMethod('editKeyValue', keyId, newValue);
-	}
+	};
 
 	return (
 		<FormControl display="flex" flexDir="row" gap="4">
@@ -44,13 +44,7 @@ export const OpenaiKeyController = ({ keyId, label, isActive, defaultValue }: Op
 				{isActive ? 'Ativo' : 'Inativo'}
 			</Badge>
 
-			<Switch
-				isChecked={isActive}
-				onChange={(e) => {
-					e.preventDefault();
-					handleActiveKey();
-				}}
-			/>
+			<Switch isChecked={isActive} onChange={handleActiveKey} />
 		</FormControl>
 	);
-};
+}

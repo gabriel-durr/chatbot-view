@@ -5,7 +5,7 @@ import { useContext } from 'react';
 import { SocketContext } from '../contexts/socket-context';
 
 export const useSocket = () => {
-	const { qrCode, keysResult, numbersPausedResult, timePaused, promptResult, executeMethod } = useContext(SocketContext);
+	const { socket, qrCode, keysResult, numbersPausedResult, timePaused, promptResult, executeMethod } = useContext(SocketContext);
 
-	return { qrCode, keysResult, numbersPausedResult, timePaused, promptResult, executeMethod };
+	return { socket, qrCode, keysResult, numbersPausedResult, timePaused, promptResult, executeMethod };
 };

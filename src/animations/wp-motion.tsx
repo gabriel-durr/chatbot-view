@@ -14,7 +14,7 @@ export const WpMotion = ({ boxSize, ...props }: WpMotionProps) => {
 
 	return (
 		<Box boxSize={boxSize}>
-			<Lottie lottieRef={lottieRef} animationData={wwpData} aria-aria-labelledby="use lottie animation" {...props} />
+			<Lottie lottieRef={lottieRef} animationData={wwpData} aria-labelledby="use lottie animation" {...props} />
 		</Box>
 	);
 };
