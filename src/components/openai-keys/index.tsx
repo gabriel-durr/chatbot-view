@@ -1,48 +1,24 @@
-import { useEffect, useState } from 'react'
+import { VStack, Heading } from '@chakra-ui/react';
 
-import { VStack, Heading } from '@chakra-ui/react'
-
-import { useSocket } from '../../hooks/useSocket'
-import { OpenaiKeyController } from './partials/openai-key-controller'
-
-type KeysProps = {
-	active: boolean
-	value: string
-	__v: number
-	_id: string
-}
+import { useSocket } from '../../hooks/useSocket';
+import { OpenaiKeyController } from './partials/openai-key-controller';
 
 export const OpenaiKeys = () => {
-	const [keys, setKeys] = useState<KeysProps[]>([])
+	const { keysResult } = useSocket();
 
-	const { executeMethod, keysResult } = useSocket()
-
-	useEffect(() => {
-		executeMethod('getKeys')
-
-		setKeys(keysResult)
-	}, [executeMethod, keys, keysResult])
-
-	if (!keys) return <div>Carregando...</div>
+	if (!keysResult?.length) return <h1>Não há Keys</h1>;
 
 	return (
-		<VStack spacing="12">
-			<Heading as="h2" size="lg">
+		<VStack spacing="20">
+			<Heading as="h2" color="blue.900" fontSize="xl" boxShadow="sm" textTransform="uppercase" textAlign="center" lineHeight="9">
 				Keys de Atendimento
 			</Heading>
 
 			<VStack>
-				{keys.map((key, index) => (
-					<OpenaiKeyController
-						key={key._id}
-						keyId={key._id}
-						isActive={key.active}
-						defaultValue={key.value}
-						label={`KEY 0${index + 1}`}
-						executeMethod={executeMethod}
-					/>
+				{keysResult.map((key, index) => (
+					<OpenaiKeyController key={key._id} keyId={key._id} isActive={key.active} defaultValue={key.value} label={`KEY 0${index + 1}`} />
 				))}
 			</VStack>
 		</VStack>
-	)
-}
+	);
+};

@@ -1,25 +1,38 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react';
 
-import { Stack, Input, Heading, Button, VStack } from '@chakra-ui/react'
+import { Stack, Input, Heading, Button, VStack } from '@chakra-ui/react';
 
-const loginEnv = import.meta.env.VITE_LOGIN
-const passwordEnv = import.meta.env.VITE_PASSWORD
+const loginEnv = import.meta.env.VITE_LOGIN;
+const passwordEnv = import.meta.env.VITE_PASSWORD;
 
 type LoginProps = {
-	onLogin(value: boolean): void
-}
+	onLogin(value: boolean): void;
+};
 
 export const Login = ({ onLogin }: LoginProps) => {
-	const [username, setUsername] = useState('')
-	const [password, setPassword] = useState('')
+	const [username, setUsername] = useState('');
+	const [password, setPassword] = useState('');
 
 	const handleLogin = () => {
 		if (username === loginEnv && password === passwordEnv) {
-			onLogin(true)
+			localStorage.setItem('credentials', JSON.stringify({ username, password }));
+			onLogin(true);
 		} else {
-			alert('Credenciais inválidas. Tente novamente.')
+			alert('Credenciais inválidas. Tente novamente.');
 		}
-	}
+	};
+
+	useEffect(() => {
+		const getCred = localStorage.getItem('credentials');
+
+		const parseCred = getCred && JSON.parse(getCred);
+
+		if (parseCred && parseCred.username === loginEnv && parseCred.password === passwordEnv) {
+			onLogin(true);
+		} else {
+			onLogin(false);
+		}
+	}, []);
 
 	return (
 		<Stack boxSize="500px" padding="8" align="center" spacing="20">
@@ -27,22 +40,12 @@ export const Login = ({ onLogin }: LoginProps) => {
 				Login Painel ADM
 			</Heading>
 			<VStack w="full">
-				<Input
-					type="text"
-					placeholder="Usuário"
-					value={username}
-					onChange={e => setUsername(e.target.value)}
-				/>
-				<Input
-					type="password"
-					placeholder="Senha"
-					value={password}
-					onChange={e => setPassword(e.target.value)}
-				/>
+				<Input type="text" placeholder="Usuário" value={username} onChange={(e) => setUsername(e.target.value)} />
+				<Input type="password" placeholder="Senha" value={password} onChange={(e) => setPassword(e.target.value)} />
 			</VStack>
 			<Button w="full" colorScheme="green" onClick={handleLogin}>
 				Entrar
 			</Button>
 		</Stack>
-	)
-}
+	);
+};

@@ -1,25 +1,21 @@
-import { useEffect } from 'react'
+import { VStack, Heading } from '@chakra-ui/react';
 
-import { VStack, Heading } from '@chakra-ui/react'
-
-import { EditableTextarea } from './partials/editable-textarea'
-import { useSocket } from '../../hooks/useSocket'
+import { useSocket } from '../../hooks/useSocket';
+import { EditableTextarea } from './partials/editable-textarea';
 
 export const PromptEditable = () => {
-	const { promptResult, executeMethod } = useSocket()
+	const { promptResult, executeMethod } = useSocket();
 
-	useEffect(() => {
-		executeMethod('getPrompt')
-	}, [promptResult, executeMethod])
+	const defaultEmpety = 'Nenhum Prompt registrado, você deve criar um nesse campo para os bots funcionarem corretamente 🧭';
 
-	if (!promptResult) return <div>Loading ...</div>
+	if (!promptResult) return <EditableTextarea content={defaultEmpety} executeMethod={executeMethod} />;
 
 	return (
 		<VStack spacing="12">
-			<Heading as="h2" size="lg">
-				Prompt da IA
+			<Heading as="h2" color="blue.900" fontSize="xl" boxShadow="sm" textTransform="uppercase" textAlign="center" lineHeight="9">
+				Prompt utilizado pela IA
 			</Heading>
 			<EditableTextarea content={promptResult} executeMethod={executeMethod} />
 		</VStack>
-	)
-}
+	);
+};
