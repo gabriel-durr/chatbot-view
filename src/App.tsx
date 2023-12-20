@@ -1,39 +1,43 @@
-import { useState } from 'react';
-
 import { Stack, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 
+import { useAuth } from './hooks/useAuth';
 import { Login } from './components/login';
+import { Header } from './components/header';
 import { QrCode } from './components/qr-code';
 import { useSocket } from './hooks/useSocket';
 import { OpenaiKeys } from './components/openai-keys';
 import { NumbersPaused } from './components/numbers-paused';
 import { PromptEditable } from './components/prompt-editable';
+import { Fragment } from 'react';
 
 function App() {
-	const [isLogged, setIsLogged] = useState(false);
 	const { qrCode } = useSocket();
+	const { isLogged, onLogin } = useAuth();
 
 	const noExistsConnection = qrCode !== 'ok';
 
-	function onLogin(value: boolean) {
-		if (!value) return;
-		setIsLogged(value);
-	}
-
 	return (
-		<Stack align="center" w="100vw" h="100vh" p="28" spacing="20">
+		<Fragment>
 			{!isLogged ? (
 				<Login onLogin={onLogin} />
 			) : (
-				<>
+				<Stack align="center" w="100vw" h="100vh" p="28">
+					<Header />
+
 					<Tabs isFitted variant="enclosed">
-						<TabList mb="20">
-							<Tab>Conexão QRCode</Tab>
-							<Tab isDisabled={noExistsConnection}>Openai Keys</Tab>
-							<Tab isDisabled={noExistsConnection}>Prompt</Tab>
-							<Tab isDisabled={noExistsConnection}>Números Pausados</Tab>
+						<TabList mb="24" whiteSpace="nowrap" color="blackAlpha.600">
+							<Tab _selected={{ fontWeight: 'bold', color: 'orange.200' }}>Conexão QRCode</Tab>
+							<Tab isDisabled={noExistsConnection} _selected={{ fontWeight: 'bold', color: 'orange.200' }}>
+								Openai Keys
+							</Tab>
+							<Tab isDisabled={noExistsConnection} _selected={{ fontWeight: 'bold', color: 'orange.200' }}>
+								Prompt
+							</Tab>
+							<Tab isDisabled={noExistsConnection} _selected={{ fontWeight: 'bold', color: 'orange.200' }}>
+								Números Pausados
+							</Tab>
 						</TabList>
-						<TabPanels display="flex" justifyContent="center">
+						<TabPanels display="flex" justifyContent="center" minW="container.md">
 							<TabPanel>
 								<QrCode />
 							</TabPanel>
@@ -48,9 +52,9 @@ function App() {
 							</TabPanel>
 						</TabPanels>
 					</Tabs>
-				</>
+				</Stack>
 			)}
-		</Stack>
+		</Fragment>
 	);
 }
 

@@ -1,51 +1,38 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import { Stack, Input, Heading, Button, VStack } from '@chakra-ui/react';
+import { Stack, Input, Heading, Button, VStack, Flex } from '@chakra-ui/react';
 
-const loginEnv = import.meta.env.VITE_LOGIN;
-const passwordEnv = import.meta.env.VITE_PASSWORD;
+type Credentials = {
+	userName: string;
+	password: string;
+};
 
 type LoginProps = {
-	onLogin(value: boolean): void;
+	onLogin(credentials: Credentials): void;
 };
 
-export const Login = ({ onLogin }: LoginProps) => {
-	const [username, setUsername] = useState('');
+export function Login({ onLogin }: LoginProps) {
+	const [userName, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 
-	const handleLogin = () => {
-		if (username === loginEnv && password === passwordEnv) {
-			localStorage.setItem('credentials', JSON.stringify({ username, password }));
-			onLogin(true);
-		} else {
-			alert('Credenciais inválidas. Tente novamente.');
-		}
+	const handleOnSubmit = () => {
+		onLogin({ userName, password });
 	};
 
-	useEffect(() => {
-		const getCred = localStorage.getItem('credentials');
-
-		const parseCred = getCred && JSON.parse(getCred);
-
-		if (parseCred && parseCred.username === loginEnv && parseCred.password === passwordEnv) {
-			onLogin(true);
-		} else {
-			onLogin(false);
-		}
-	}, []);
-
 	return (
-		<Stack boxSize="500px" padding="8" align="center" spacing="20">
-			<Heading as="h2" color="gray.800">
-				Login Painel ADM
-			</Heading>
-			<VStack w="full">
-				<Input type="text" placeholder="Usuário" value={username} onChange={(e) => setUsername(e.target.value)} />
-				<Input type="password" placeholder="Senha" value={password} onChange={(e) => setPassword(e.target.value)} />
-			</VStack>
-			<Button w="full" colorScheme="green" onClick={handleLogin}>
-				Entrar
-			</Button>
-		</Stack>
+		<Flex flexDir="column" align="center" w="100vw" h="100vh" p="28">
+			<Stack boxSize="500px" padding="8" align="center" spacing="20">
+				<Heading as="h2" color="gray.800">
+					Login Painel ADM
+				</Heading>
+				<VStack w="full">
+					<Input type="text" placeholder="Usuário" value={userName} onChange={(e) => setUsername(e.target.value)} />
+					<Input type="password" placeholder="Senha" value={password} onChange={(e) => setPassword(e.target.value)} />
+				</VStack>
+				<Button w="full" colorScheme="green" onClick={handleOnSubmit}>
+					Entrar
+				</Button>
+			</Stack>
+		</Flex>
 	);
-};
+}

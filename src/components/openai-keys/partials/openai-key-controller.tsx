@@ -29,7 +29,6 @@ export const OpenaiKeyController = ({ keyId, label, isActive, defaultValue }: Op
 			<FormLabel>{`${label}:`}</FormLabel>
 			<Editable
 				value={newValue}
-				noOfLines={1}
 				onChange={(value) => setWewValue(value)}
 				onKeyDown={(event) => {
 					if (event.key === 'Enter') {
@@ -37,8 +36,8 @@ export const OpenaiKeyController = ({ keyId, label, isActive, defaultValue }: Op
 						handleUpdateKey();
 					}
 				}}>
-				<EditablePreview noOfLines={1} w="220px" />
-				<EditableInput />
+				<EditablePreview w="220px" noOfLines={1} whiteSpace="nowrap" />
+				<EditableInput w="220px" />
 			</Editable>
 
 			<Badge variant="subtle" fontSize="0.8em" boxSize="max" colorScheme={isActive ? 'green' : 'red'}>
